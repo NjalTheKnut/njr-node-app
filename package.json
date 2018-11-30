@@ -1,0 +1,23 @@
+{
+  "name": "njr-node-app",
+  "version": "1.0.0",
+  "description": "Personal Node.js/Express practice/learning app.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NjalTheKnut/njr-node-app.git"
+  },
+  "dependencies": {
+    "express": "*",
+    "bodyParser":"*"
+  },
+  "author": "NJR",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NjalTheKnut/njr-node-app/issues"
+  },
+  "homepage": "https://github.com/NjalTheKnut/njr-node-app#readme"
+}
