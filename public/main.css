@@ -1,0 +1,10 @@
+/* CSS Overrides */
+input {
+    background-color: black;
+    color: white;
+}
+
+textarea {
+    background-color: black;
+    color: white;
+}
