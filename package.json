@@ -12,7 +12,7 @@
     "url": "git+https://github.com/NjalTheKnut/njr-node-app.git"
   },
   "dependencies": {
-    "bodyParser": "*",
+    "body-parser": "*",
     "ejs": "*",
     "express": "*",
     "express-validator": "*",
