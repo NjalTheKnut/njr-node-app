@@ -4,8 +4,7 @@
   "description": "Personal Node.js/Express practice/learning app.",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon www"
+    "start": "nodemon app.js"
   },
   "repository": {
     "type": "git",
