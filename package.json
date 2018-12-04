@@ -16,7 +16,8 @@
     "express": "*",
     "express-validator": "*",
     "mongojs": "*",
-    "nodemon": "*"
+    "nodemon": "*",
+    "nginx": "*"
   },
   "author": "NJR",
   "license": "ISC",
