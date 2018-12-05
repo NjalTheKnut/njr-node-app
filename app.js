@@ -16,6 +16,8 @@ var logger = function(req, res, next){
 app.use(logger);
 */
 
+app.set('port', process.env.PORT || 3000);
+
 // View Engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -110,6 +112,7 @@ app.delete('/users/delete/:id', function (req, res) {
     });
 });
 
-app.listen(3000, function () {
-    console.log('Server Started on Port 3000...');
-})
+
+http.createServer(app).listen(app.get('port'), function () {
+    console.log('Server Started on Port ' + app.get('port'));
+});
