@@ -17,7 +17,9 @@
     "express-validator": "*",
     "mongojs": "*",
     "nodemon": "*",
-    "aws-sdk": "*"
+    "aws-sdk": "*",
+    "pug": "*",
+    "mongoose": "*"
   },
   "author": "NJR",
   "license": "ISC",

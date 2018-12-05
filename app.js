@@ -1,6 +1,5 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var http = require('http');
 var path = require('path');
 var expressValidator = require('express-validator');
 var mongojs = require('mongojs');
@@ -19,10 +18,18 @@ app.use(logger);
 
 app.set('port', process.env.PORT || 3000);
 
-// View Engine
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
+/* var server = http.createServer((req, res) => {
+    res.statusCode = 200;
+    res.setHeader('Content-type', '');
+    res.render(app);
+    res.end();
+}); */
 
+
+
+// View Engine
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
 
 //Body Parser Middleware
 app.use(bodyParser.json());
@@ -49,7 +56,7 @@ app.get('/', function (req, res) {
     db.users.find(function (err, docs) {
         // docs is an array of all the documents in mycollection
         res.render('index', {
-            title: 'Customers',
+            title: 'NJR-Node-App',
             users: docs
         });
     })
@@ -114,6 +121,6 @@ app.delete('/users/delete/:id', function (req, res) {
 });
 
 
-http.createServer(app).listen(app.get('port'), function () {
+app.listen(app.get('port'), function () {
     console.log('Server Started on Port ' + app.get('port'));
 });
