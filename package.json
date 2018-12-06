@@ -12,14 +12,15 @@
   },
   "dependencies": {
     "body-parser": "*",
-    "ejs": "*",
     "express": "*",
+    "express-messages": "*",
+    "express-session": "*",
     "express-validator": "*",
-    "mongojs": "*",
+    "pug": "*",
     "nodemon": "*",
     "aws-sdk": "*",
-    "pug": "*",
-    "mongoose": "*"
+    "mongojs": "*",
+    "ejs": "*"
   },
   "author": "NJR",
   "license": "ISC",

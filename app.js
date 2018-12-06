@@ -1,31 +1,13 @@
 var express = require('express');
-var bodyParser = require('body-parser');
 var path = require('path');
+var bodyParser = require('body-parser');
 var expressValidator = require('express-validator');
+var session = require('express-session');
 var mongojs = require('mongojs');
 var db = mongojs('njr-node-app', ['users']);
 var ObjectID = mongojs.ObjectID;
+
 var app = express();
-
-/*
-var logger = function(req, res, next){
-    console.log('Logging...');
-    next();
-}
-
-app.use(logger);
-*/
-
-app.set('port', process.env.PORT || 3000);
-
-/* var server = http.createServer((req, res) => {
-    res.statusCode = 200;
-    res.setHeader('Content-type', '');
-    res.render(app);
-    res.end();
-}); */
-
-
 
 // View Engine
 app.set('views', path.join(__dirname, 'views'));
@@ -37,19 +19,23 @@ app.use(bodyParser.urlencoded({
     extended: false
 }));
 
-// Set Static Path
+// Set Public Folder
 app.use(express.static(path.join(__dirname, 'public')))
 
 // Global Vars
-
 app.use(function (req, res, next) {
     res.locals.errors = null;
     next();
 });
 
+//Express Session Middleware
+app.use(session({
+    secret: 'keyboard cat',
+    resave: true,
+    saveUninitialized: true
+}));
+
 app.use(expressValidator());
-
-
 
 app.get('/', function (req, res) {
     // find everything
@@ -120,7 +106,7 @@ app.delete('/users/delete/:id', function (req, res) {
     });
 });
 
-
+app.set('port', process.env.PORT || 3000);
 app.listen(app.get('port'), function () {
     console.log('Server Started on Port ' + app.get('port'));
 });
