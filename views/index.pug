@@ -2,6 +2,8 @@ extends layout
 
 block content
     h1 #{title}
-    ul
+    h3 User List
+    ul.list-group
         each user, i  in users
-            li= user.first_name + ' ' + user.last_name
+            li.list-group-item
+                a(href='/user/'+user._id)= user.first_name + ' ' + user.last_name
