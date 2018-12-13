@@ -11,16 +11,17 @@
     "url": "git+https://github.com/NjalTheKnut/njr-node-app.git"
   },
   "dependencies": {
+    "aws-sdk": "*",
+    "bcryptjs": "*",
     "body-parser": "*",
+    "ejs": "*",
     "express": "*",
     "express-messages": "*",
     "express-session": "*",
     "express-validator": "*",
-    "pug": "*",
+    "mongoose": "*",
     "nodemon": "*",
-    "aws-sdk": "*",
-    "mongojs": "*",
-    "ejs": "*"
+    "pug": "*"
   },
   "author": "NJR",
   "license": "ISC",
