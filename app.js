@@ -3,21 +3,37 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var expressValidator = require('express-validator');
 var session = require('express-session');
-var mongojs = require('mongojs');
-var db = mongojs('njr-node-app', ['users']);
-var ObjectID = mongojs.ObjectID;
+var mongoose = require('mongoose');
+var config = require('./config/database');
 
+mongoose.connect(config.database);
+var db = mongoose.connection;
+
+// log db connection success
+db.once('open', function () {
+    console.log('Connected to MongoDB');
+});
+
+// check for db errors
+db.on('error', function (err) {
+    console.log('MongoDB has encountered the following error(s):\n' + err);
+});
+
+// init app
 var app = express();
+
+// models
+var User = require('./models/user');
 
 // View Engine
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 //Body Parser Middleware
-app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-    extended: false
+    extended: true
 }));
+app.use(bodyParser.json());
 
 // Set Public Folder
 app.use(express.static(path.join(__dirname, 'public')))
@@ -38,17 +54,25 @@ app.use(session({
 app.use(expressValidator());
 
 app.get('/', function (req, res) {
-    // find everything
-    db.users.find(function (err, docs) {
+    User.find(function (err, docs) {
         // docs is an array of all the documents in mycollection
         res.render('index', {
-            title: 'NJR-Node-App',
+            title: 'Welcome!',
             users: docs
         });
-    })
+    });
 });
 
-
+app.get('/user', function (req, res) {
+    // find everything
+    User.find(function (err, docs) {
+        // docs is an array of all the documents in mycollection
+        res.render('user', {
+            title: 'Users',
+            users: docs
+        });
+    });
+});
 
 const {
     check,
@@ -69,9 +93,8 @@ app.post('/', [
 ], (req, res) => {
     // Finds the validation errors in this request and wraps them in an object with handy functions
     var errors = validationResult(req);
-
     if (!errors.isEmpty()) {
-        db.users.find(function (err, docs) {
+        User.find(function (err, docs) {
             // docs is an array of all the documents in mycollection
             res.render('index', {
                 title: 'Customers',
@@ -86,7 +109,7 @@ app.post('/', [
             email: req.body.email
         };
         //add
-        db.users.insert(newUser, function (err, result) {
+        User.insert(newUser, function (err, result) {
             if (err) {
                 console.log(err);
             }
@@ -96,13 +119,43 @@ app.post('/', [
 });
 
 app.delete('/users/delete/:id', function (req, res) {
-    db.users.remove({
+    User.remove({
         _id: ObjectID(req.params.id)
     }, function (err, result) {
         if (err) {
             console.log(err);
         }
         res.redirect('/');
+    });
+});
+
+app.get('/user_add', function (req, res) {
+    res.render('user_add', {
+        title: 'Add User'
+    });
+});
+
+app.get('/user/:id', function (req, res) {
+    User.findById(req.params.id, function (err, user) {
+        res.render('user_profile', {
+            user: user
+        });
+    });
+});
+
+app.post('/user_add', function (req, res) {
+    var user = new User();
+    user.first_name = req.body.first_name;
+    user.last_name = req.body.last_name;
+    user.email = req.body.email;
+
+    user.save(function (err) {
+        if (err) {
+            console.log(err);
+            return;
+        } else {
+            res.redirect('/');
+        }
     });
 });
 
